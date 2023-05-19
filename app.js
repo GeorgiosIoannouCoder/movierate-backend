@@ -86,7 +86,7 @@ app.use(
   cookieSession({
     secret: "secretcode",
     resave: true,
-    // saveUninitialized: true,
+    saveUninitialized: true,
     cookie: {
       sameSite: "none",
       secure: true,
