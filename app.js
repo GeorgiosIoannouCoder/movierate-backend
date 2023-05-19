@@ -79,6 +79,9 @@ app.use("/api/review", reviewRouter);
 app.use("/api/admin", adminRouter);
 
 // Third-party authentication.
+app.set("trust proxy", 1);
+
+// Third-party authentication.
 app.use(
   cookieSession({
     secret: "secretcode",
@@ -178,7 +181,7 @@ function generateUserToken(req, res) {
     sameSite: "none",
     maxAge: 3600000, // Expires in one hour.
   });
-  res.redirect("http://localhost:3000/");
+  res.redirect("https://app.movierate.tv/");
 }
 
 app.get(
@@ -195,7 +198,7 @@ app.get(
     "google",
 
     {
-      failureRedirect: "http://localhost:3000/auth/signin",
+      failureRedirect: "https://app.movierate.tv/auth/signin",
       session: false,
     }
   ),
@@ -218,7 +221,7 @@ app.get(
     "github",
 
     {
-      failureRedirect: "http://localhost:3000/auth/signin",
+      failureRedirect: "https://app.movierate.tv/auth/signin",
       session: false,
     }
   ),
