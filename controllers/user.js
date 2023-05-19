@@ -16,6 +16,7 @@ const {
   generateRandomByte,
   formatUser,
 } = require("../utils/helper");
+const { sendEmail } = require("../utils/mail");
 
 // Controller: create.
 exports.create = async (req, res) => {
@@ -49,29 +50,52 @@ exports.create = async (req, res) => {
 
   await newEmailVerificationToken.save();
 
-  var transport = generateMailTransporter();
+  // var transport = generateMailTransporter();
 
-  transport.sendMail({
-    from: "verification@movierate.com",
-    to: newUser.email,
-    subject: "Welcome to MovieRate - Email Verification",
-    html: `
-      <div style="text-align:center;">
-        <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
-      </div>
-      <h1 style="color:#d0a462;text-align:center;">You verification OTP for MovieRate</h1>
-      <h2 style="color:#282c34;text-align:left;">This email is intended for the user with name: ${newUser.name} and email address: ${newUser.email} registered at MovieRate.</h2>
-      <div style="padding: 1px; background-color: #f1f1f1; width: 50%; margin-left: auto; margin-right: auto;">
-        <h1 style="color:#282c34;text-align:center;">OTP</h1>
-        <h1 style="color:#282c34;text-align:center;">${OTP}</h1>
-      </div>
-      <h3 style="color:#282c34;text-align:center;">OTP created at: ${createdTime}</h3>
-      <h3 style="color:#282c34;text-align:center;">OTP expires at: ${expiresTime}</h3>
-      <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because someone tried to register/login with this email account at MovieRate! If this was you, you can disregard this message! Otherwise, please change your password or ignore this email!</h2>
-      <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
-      <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
-    `,
-  });
+  // transport.sendMail({
+  //   from: "verification@movierate.com",
+  //   to: newUser.email,
+  //   subject: "Welcome to MovieRate - Email Verification",
+  //   html: `
+  //     <div style="text-align:center;">
+  //       <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
+  //     </div>
+  //     <h1 style="color:#d0a462;text-align:center;">You verification OTP for MovieRate</h1>
+  //     <h2 style="color:#282c34;text-align:left;">This email is intended for the user with name: ${newUser.name} and email address: ${newUser.email} registered at MovieRate.</h2>
+  //     <div style="padding: 1px; background-color: #f1f1f1; width: 50%; margin-left: auto; margin-right: auto;">
+  //       <h1 style="color:#282c34;text-align:center;">OTP</h1>
+  //       <h1 style="color:#282c34;text-align:center;">${OTP}</h1>
+  //     </div>
+  //     <h3 style="color:#282c34;text-align:center;">OTP created at: ${createdTime}</h3>
+  //     <h3 style="color:#282c34;text-align:center;">OTP expires at: ${expiresTime}</h3>
+  //     <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because someone tried to register/login with this email account at MovieRate! If this was you, you can disregard this message! Otherwise, please change your password or ignore this email!</h2>
+  //     <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
+  //     <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
+  //   `,
+  // });
+
+  const htmlContent = `
+  <div style="text-align:center;">
+    <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
+  </div>
+  <h1 style="color:#d0a462;text-align:center;">You verification OTP for MovieRate</h1>
+  <h2 style="color:#282c34;text-align:left;">This email is intended for the user with name: ${newUser.name} and email address: ${newUser.email} registered at MovieRate.</h2>
+  <div style="padding: 1px; background-color: #f1f1f1; width: 50%; margin-left: auto; margin-right: auto;">
+    <h1 style="color:#282c34;text-align:center;">OTP</h1>
+    <h1 style="color:#282c34;text-align:center;">${OTP}</h1>
+  </div>
+  <h3 style="color:#282c34;text-align:center;">OTP created at: ${createdTime}</h3>
+  <h3 style="color:#282c34;text-align:center;">OTP expires at: ${expiresTime}</h3>
+  <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because someone tried to register/login with this email account at MovieRate! If this was you, you can disregard this message! Otherwise, please change your password or ignore this email!</h2>
+  <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
+  <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
+`;
+  await sendEmail(
+    newUser.email,
+    newUser.name,
+    "Email Verification",
+    htmlContent
+  );
 
   res.status(201).json({
     user: {
@@ -118,23 +142,19 @@ exports.verifyEmail = async (req, res) => {
 
   await EmailVerificationToken.findByIdAndDelete(token._id);
 
-  var transport = generateMailTransporter();
+  // var transport = generateMailTransporter();
 
-  transport.sendMail({
-    from: "verification@movierate.com",
-    to: user.email,
-    subject: "Welcome to MovieRate - Email Verified!",
-    html: `
-      <div style="text-align:center;">
-        <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
-      </div>
-      <h1 style="color:#d0a462;text-align:center;">Welcome to MovieRate!</h1>
-      <h2 style="color:#282c34;text-align:left;">This email is intended for the user with name: ${user.name} and email address: ${user.email} registered at MovieRate.</h2>
-      <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because someone tried to register/login with this email account at MovieRate! If this was you, you can disregard this message! Otherwise, please change your password or ignore this email!</h2>
-      <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
-      <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
-    `,
-  });
+  const htmlContent = `
+  <div style="text-align:center;">
+    <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
+  </div>
+  <h1 style="color:#d0a462;text-align:center;">Welcome to MovieRate!</h1>
+  <h2 style="color:#282c34;text-align:left;">This email is intended for the user with name: ${user.name} and email address: ${user.email} registered at MovieRate.</h2>
+  <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because someone tried to register/login with this email account at MovieRate! If this was you, you can disregard this message! Otherwise, please change your password or ignore this email!</h2>
+  <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
+  <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
+`;
+  await sendEmail(user.email, user.name, "Welcome - Movie Rate", htmlContent);
 
   const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
     expiresIn: "1h",
@@ -196,13 +216,31 @@ exports.resendEmailVerificationToken = async (req, res) => {
 
   await newEmailVerificationToken.save();
 
-  var transport = generateMailTransporter();
+  // var transport = generateMailTransporter();
 
-  transport.sendMail({
-    from: "verification@movierate.com",
-    to: user.email,
-    subject: "Welcome to MovieRate - Email Verification",
-    html: `
+  // transport.sendMail({
+  //   from: "verification@movierate.com",
+  //   to: user.email,
+  //   subject: "Welcome to MovieRate - Email Verification",
+  //   html: `
+  //     <div style="text-align:center;">
+  //       <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
+  //     </div>
+  //     <h1 style="color:#d0a462;text-align:center;">You verification OTP for MovieRate</h1>
+  //     <h2 style="color:#282c34;text-align:left;">This email is intended for the user with name: ${user.name} and email address: ${user.email} registered at MovieRate.</h2>
+  //     <div style="padding: 1px; background-color: #f1f1f1; width: 50%; margin-left: auto; margin-right: auto;">
+  //       <h1 style="color:#282c34;text-align:center;">OTP</h1>
+  //       <h1 style="color:#282c34;text-align:center;">${OTP}</h1>
+  //     </div>
+  //     <h3 style="color:#282c34;text-align:center;">OTP created at: ${createdTime}</h3>
+  //     <h3 style="color:#282c34;text-align:center;">OTP expires at: ${expiresTime}</h3>
+  //     <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because someone tried to register/login with this email account at MovieRate! If this was you, you can disregard this message! Otherwise, please change your password or ignore this email!</h2>
+  //     <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
+  //     <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
+  //   `,
+  // });
+
+  const htmlContent = `
       <div style="text-align:center;">
         <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
       </div>
@@ -217,8 +255,13 @@ exports.resendEmailVerificationToken = async (req, res) => {
       <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because someone tried to register/login with this email account at MovieRate! If this was you, you can disregard this message! Otherwise, please change your password or ignore this email!</h2>
       <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
       <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
-    `,
-  });
+    `;
+  await sendEmail(
+    user.email,
+    user.name,
+    "Email Verification - Movie Rate",
+    htmlContent
+  );
 
   res.json({
     message: "New OTP TOKEN has been sent to your registered email account",
@@ -256,30 +299,52 @@ exports.forgetPassword = async (req, res) => {
 
   await newPasswordResetToken.save();
 
-  const resetPasswordUrl = `http://localhost:3000/auth/reset-password?token=${token}&id=${user._id}`;
+  const resetPasswordUrl = `https://app.movierate.tv/auth/reset-password?token=${token}&id=${user._id}`;
 
-  const transport = generateMailTransporter();
+  // const transport = generateMailTransporter();
 
-  transport.sendMail({
-    from: "security@movierate.com",
-    to: user.email,
-    subject: "MovieRate Security- Reset Password Link",
-    html: `
-      <div style="text-align:center;">
-        <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
-      </div>
-      <h1 style="color:#d0a462;text-align:center;">You Reset Password Link for MovieRate</h1>
-      <h2 style="color:#282c34;text-align:left;">This email is intended for the user with name: ${user.name} and email address: ${user.email} registered at MovieRate.</h2>
-      <div style="padding: 1px; background-color: #f1f1f1; width: 50%; margin-left: auto; margin-right: auto; text-align: center;">
-        <a href="${resetPasswordUrl}" style="color:#282c34;">Change Password</a>
-      </div>
-      <h3 style="color:#282c34;text-align:center;">Reset link created at: ${createdTime}</h3>
-      <h3 style="color:#282c34;text-align:center;">Reset link expires at: ${expiresTime}</h3>
-      <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because someone requested to reset the password associated with this email account at MovieRate! If this was you, you can disregard this message! Otherwise, please change your password or ignore this email!</h2>
-      <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
-      <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
-    `,
-  });
+  // transport.sendMail({
+  //   from: "security@movierate.com",
+  //   to: user.email,
+  //   subject: "MovieRate Security- Reset Password Link",
+  //   html: `
+  //     <div style="text-align:center;">
+  //       <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
+  //     </div>
+  //     <h1 style="color:#d0a462;text-align:center;">You Reset Password Link for MovieRate</h1>
+  //     <h2 style="color:#282c34;text-align:left;">This email is intended for the user with name: ${user.name} and email address: ${user.email} registered at MovieRate.</h2>
+  //     <div style="padding: 1px; background-color: #f1f1f1; width: 50%; margin-left: auto; margin-right: auto; text-align: center;">
+  //       <a href="${resetPasswordUrl}" style="color:#282c34;">Change Password</a>
+  //     </div>
+  //     <h3 style="color:#282c34;text-align:center;">Reset link created at: ${createdTime}</h3>
+  //     <h3 style="color:#282c34;text-align:center;">Reset link expires at: ${expiresTime}</h3>
+  //     <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because someone requested to reset the password associated with this email account at MovieRate! If this was you, you can disregard this message! Otherwise, please change your password or ignore this email!</h2>
+  //     <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
+  //     <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
+  //   `,
+  // });
+
+  const htmlContent = `
+  <div style="text-align:center;">
+    <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
+  </div>
+  <h1 style="color:#d0a462;text-align:center;">You Reset Password Link for MovieRate</h1>
+  <h2 style="color:#282c34;text-align:left;">This email is intended for the user with name: ${user.name} and email address: ${user.email} registered at MovieRate.</h2>
+  <div style="padding: 1px; background-color: #f1f1f1; width: 50%; margin-left: auto; margin-right: auto; text-align: center;">
+    <a href="${resetPasswordUrl}" style="color:#282c34;">Change Password</a>
+  </div>
+  <h3 style="color:#282c34;text-align:center;">Reset link created at: ${createdTime}</h3>
+  <h3 style="color:#282c34;text-align:center;">Reset link expires at: ${expiresTime}</h3>
+  <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because someone requested to reset the password associated with this email account at MovieRate! If this was you, you can disregard this message! Otherwise, please change your password or ignore this email!</h2>
+  <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
+  <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
+`;
+  await sendEmail(
+    user.email,
+    user.name,
+    "Reset Password Link - Movie Rate",
+    htmlContent
+  );
 
   res.json({ message: "Reset Password Link has been sent to your email!" });
 };
@@ -308,24 +373,43 @@ exports.resetPassword = async (req, res) => {
 
   await PasswordResetToken.findByIdAndDelete(req.resetToken._id);
 
-  const transport = generateMailTransporter();
+  // const transport = generateMailTransporter();
 
-  transport.sendMail({
-    from: "security@reviewapp.com",
-    to: user.email,
-    subject: "MovieRate Security - Password Reset Successfully",
-    html: `
-      <div style="text-align:center;">
-        <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
-      </div>
-      <h1 style="color:#d0a462;text-align:center;">Password Reset Successfully for MovieRate</h1>
-      <h2 style="color:#282c34;text-align:center;">Now you can use your new password!</h2>
-      <h2 style="color:#282c34;text-align:left;">This email is intended for the user with name: ${user.name} and email address: ${user.email} registered at MovieRate.</h2>
-      <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because the password associated with this email account at MovieRate has been reset successfully! If this was you, you can disregard this message. Otherwise, please contact us!</h2>
-      <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
-      <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
-    `,
-  });
+  // transport.sendMail({
+  //   from: "security@reviewapp.com",
+  //   to: user.email,
+  //   subject: "MovieRate Security - Password Reset Successfully",
+  //   html: `
+  //     <div style="text-align:center;">
+  //       <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
+  //     </div>
+  //     <h1 style="color:#d0a462;text-align:center;">Password Reset Successfully for MovieRate</h1>
+  //     <h2 style="color:#282c34;text-align:center;">Now you can use your new password!</h2>
+  //     <h2 style="color:#282c34;text-align:left;">This email is intended for the user with name: ${user.name} and email address: ${user.email} registered at MovieRate.</h2>
+  //     <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because the password associated with this email account at MovieRate has been reset successfully! If this was you, you can disregard this message. Otherwise, please contact us!</h2>
+  //     <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
+  //     <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
+  //   `,
+  // });
+
+  const htmlContent = `
+  <div style="text-align:center;">
+    <img src="https://res.cloudinary.com/dgnigx1ez/image/upload/v1684094877/logo_e41bp2.png" alt="MovieRate log">
+  </div>
+  <h1 style="color:#d0a462;text-align:center;">Password Reset Successfully for MovieRate</h1>
+  <h2 style="color:#282c34;text-align:center;">Now you can use your new password!</h2>
+  <h2 style="color:#282c34;text-align:left;">This email is intended for the user with name: ${user.name} and email address: ${user.email} registered at MovieRate.</h2>
+  <h2 style="color:#ff0000;text-align:left;size=5rem;">You received this email because the password associated with this email account at MovieRate has been reset successfully! If this was you, you can disregard this message. Otherwise, please contact us!</h2>
+  <h4 style="color:#1c1f25;text-align:center;">Thank you very much for choosing MovieRate!</h4>
+  <h4 style="color:#1c1f25;text-align:center;">© 2023, MovieRate, Inc. or its affiliates. All rights reserved.</h4>
+`;
+
+  await sendEmail(
+    user.email,
+    user.name,
+    "Password Reset Successfully - Movie Rate",
+    htmlContent
+  );
 
   res.json({
     message:
