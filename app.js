@@ -228,6 +228,9 @@ app.use("/*", handleNotFound);
 
 // Error handling method.
 app.use(errorHandler);
-app.listen(8000, () => {
-  console.log("Express server running on port 8000!");
+
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
+  console.log("Express server running on port " + PORT + "!");
 });
