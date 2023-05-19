@@ -79,7 +79,7 @@ app.use("/api/review", reviewRouter);
 app.use("/api/admin", adminRouter);
 
 // Third-party authentication.
-// app.set("trust proxy", 1);
+app.set("trust proxy", 1);
 
 // Third-party authentication.
 app.use(
@@ -113,7 +113,7 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/callback",
+      callbackURL: "https://movierate.tv/auth/google/callback",
     },
     async function (accessToken, refreshToken, profile, cb) {
       User.findOne({ googleId: profile.id }, async (err, doc) => {
