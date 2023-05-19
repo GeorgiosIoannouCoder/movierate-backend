@@ -4,7 +4,7 @@
   "description": "MovieRate is a movie review platform to give the chance to people to rate movies/series and also make them aware if something is worth the time, effort, and money to watch.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "author": "movierate-Georgios_Ioannou",
   "license": "ISC",
