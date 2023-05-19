@@ -79,14 +79,14 @@ app.use("/api/review", reviewRouter);
 app.use("/api/admin", adminRouter);
 
 // Third-party authentication.
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 
 // Third-party authentication.
 app.use(
   cookieSession({
     secret: "secretcode",
     resave: true,
-    saveUninitialized: true,
+    // saveUninitialized: true,
     cookie: {
       sameSite: "none",
       secure: true,
