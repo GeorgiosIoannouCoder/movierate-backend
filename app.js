@@ -144,7 +144,7 @@ passport.use(
     {
       clientID: GITHUB_CLIENT_ID,
       clientSecret: GITHUB_CLIENT_SECRET,
-      callbackURL: "/auth/github/callback",
+      callbackURL: "https://movierate.tv/auth/github/callback",
       scope: ["user:email"],
     },
     async function (accessToken, refreshToken, profile, cb) {
