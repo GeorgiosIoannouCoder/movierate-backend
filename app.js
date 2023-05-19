@@ -4,6 +4,8 @@ require("dotenv").config();
 require("express-async-errors");
 // Import express.
 const express = require("express");
+// Import path.
+const path = require("path");
 // Logging incoming HTTP requests
 const morgan = require("morgan");
 // Allow the web application from one domain to access resources, such as APIs, on a different domain.
@@ -53,6 +55,8 @@ const app = express();
 app.use(cors());
 // Convert everything coming from the front-end to JSON format.
 app.use(express.json());
+//
+app.use(express.static(path.join(__dirname, "public")));
 // Use the morgan middleware in the express application.
 app.use(morgan("dev"));
 // Use cookieParser.
