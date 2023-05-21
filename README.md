@@ -401,7 +401,7 @@ Project Link: [https://github.com/GeorgiosIoannouCoder/movierate-backend](https:
 [Mailtrap]: https://img.shields.io/badge/mailtrap-000000?style=for-the-badge&logo=mailtrap&logoColor=07b6d5
 [Mailtrap-url]: https://mailtrap.io/
 
-[Brevo]: https://img.shields.io/badge/brevo-e7eff6?style=for-the-badge&logo=sendinblue&logoColor=07b6d5
+[Brevo]: https://img.shields.io/badge/brevo-ffffff?style=for-the-badge&logo=sendinblue&logoColor=07b6d5
 [Brevo-url]: https://www.brevo.com/
 
 [Cloudinary]: https://img.shields.io/badge/cloudinary-000000?style=for-the-badge&logo=cloudinary&logoColor=07b6d5
