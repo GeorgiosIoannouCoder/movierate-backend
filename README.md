@@ -125,7 +125,7 @@
 
 ## Getting Started
 
-**To get a local copy of MovieRate up and running follow these simple example steps:**
+**To get a local copy of MovieRate up and running locally follow these simple example steps:**
 
 ### Prerequisites
 
@@ -170,7 +170,7 @@
 
 1. Get a free Streaming Availability API Key at [https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability](https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability). (for getting Streaming Services)
 
-1. Get a free Mailtap API Username and Password at [https://mailtrap.io/signin](https://mailtrap.io/signin). (for sending emails during production. Use Brevo for deployment)
+1. Get a free Mailtap API Username and Password at [https://mailtrap.io/signin](https://mailtrap.io/signin). (for sending emails during production. Switch to **Brevo** for deployment.)
 
 1. Get a free Cloudinary Username, API Key, and API Secret at [https://cloudinary.com](https://cloudinary.com). (for uploading and storing images and videos)
 
@@ -188,7 +188,7 @@
 
 #### SetUp
 
-1. Navigate to the directory where you want to clone/run/save the application.
+1. Navigate to the directory where you want to clone/run/save the application
 
     ```sh
     cd your_selected_directory
@@ -212,7 +212,7 @@
    cd movierate-backend
    ```
 
-1. Git chekout to the first version/commit of this repository (backend) because now it is setup for deployment.
+1. Git chekout to the first version/commit of this repository (backend) because now it is setup for deployment
 
    ```sh
    git checkout ecc661073823ba01d74a483a6c7fda0405473853
@@ -224,7 +224,7 @@
    npm i
    ```
 
-1. Create a .env file inside the movierate-backend directory.
+1. Create a .env file inside the movierate-backend directory
 
     ```js
     MONGO_URI=mongodb://127.0.0.1:27017/movierate_db
@@ -246,7 +246,7 @@
    npm start
    ```
 
-1. Open MongoDB Compass and connect to the URI mongodb://127.0.0.1:27017/movierate_db. Here you will see your database movierate_db being created and storing the data of the web application.
+1. Open MongoDB Compass and connect to the URI mongodb://127.0.0.1:27017/movierate_db. Here you will see your database movierate_db being created and storing the data of the web application
 
 1. Open a second terminal
 
@@ -262,7 +262,7 @@
    cd movierate-frontend
    ```
 
-1. Git chekout to the first version/commit of this repository (fronted) because now it is setup for deployment.
+1. Git chekout to the first version/commit of this repository (fronted) because now it is setup for deployment
 
    ```sh
    git checkout 649e6c09590d49a63d25226f0df844e6cb2c7297
