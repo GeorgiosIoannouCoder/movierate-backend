@@ -296,7 +296,7 @@ You can use the following two accounts to test the application in case that you 
     - Email: user@email.com
     - Password: 12345678aA!
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right"><a href="#readme-top">Back to top</a></p>
 
 ## Contributing
 
