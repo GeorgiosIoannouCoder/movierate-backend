@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-***NOTE: This is the backend of the MovieRate! Please visit the frontend [here](https://github.com/GeorgiosIoannouCoder/movierate-frontend)***
+***NOTE: This is the backend of the MovieRate! Please visit the frontend [here](https://github.com/GeorgiosIoannouCoder/movierate-frontend)!***
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
