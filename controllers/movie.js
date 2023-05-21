@@ -119,6 +119,37 @@ exports.createMovie = async (req, res) => {
       }
     }
     newMovie.poster = finalPoster;
+  } else {
+    const {
+      secure_url: url,
+      public_id,
+      responsive_breakpoints,
+    } = await cloudinary.uploader.upload(
+      "https://res.cloudinary.com/dgnigx1ez/image/upload/v1684661024/default_movie_poster_aghhrf.jpg",
+      {
+        transformation: {
+          width: 1280,
+          height: 720,
+        },
+        responsive_breakpoints: {
+          create_derived: true,
+          max_width: 640,
+          max_images: 3,
+        },
+      }
+    );
+
+    const finalPoster = { url, public_id, responsive: [] };
+
+    const { breakpoints } = responsive_breakpoints[0];
+
+    if (breakpoints.length) {
+      for (let imgObj of breakpoints) {
+        const { secure_url } = imgObj;
+        finalPoster.responsive.push(secure_url);
+      }
+    }
+    newMovie.poster = finalPoster;
   }
 
   await newMovie.save();
@@ -146,7 +177,6 @@ exports.updateMovieWithoutPoster = async (req, res) => {
   }
 
   const {
-    trailer, // Object with url and public_id.
     title, // String.
     storyLine, // String.
     type, // String.
@@ -161,7 +191,6 @@ exports.updateMovieWithoutPoster = async (req, res) => {
     filmRating, // String.
   } = req.body;
 
-  movie.trailer = trailer;
   movie.title = title;
   movie.storyLine = storyLine;
   movie.type = type;
@@ -212,7 +241,6 @@ exports.updateMovie = async (req, res) => {
   }
 
   const {
-    trailer,
     title,
     storyLine,
     type,
@@ -227,7 +255,6 @@ exports.updateMovie = async (req, res) => {
     filmRating,
   } = req.body;
 
-  movie.trailer = trailer;
   movie.title = title;
   movie.storyLine = storyLine;
   movie.type = type;
