@@ -16,13 +16,26 @@ const cloudinary = require("../cloud");
 
 // Controller: createActor.
 exports.createActor = async (req, res) => {
-  const { name, dob, about, gender, age, died } = req.body;
+  const { name, dob, about, gender, age } = req.body;
   const { file } = req;
+  let { died } = req.body;
+
+  if (died === "") {
+    died = false;
+  } else {
+    died = true;
+  }
 
   const newActor = new Actor({ name, dob, about, gender, age, died });
 
   if (file) {
     const { url, public_id } = await uploadImageToCloud(file.path);
+    newActor.profile = { url, public_id };
+  } else {
+    const { url, public_id } = await uploadImageToCloud(
+      "https://res.cloudinary.com/dgnigx1ez/image/upload/v1684665407/default_user_poster_hsyzvw.jpg"
+    );
+
     newActor.profile = { url, public_id };
   }
   await newActor.save();
