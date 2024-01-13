@@ -77,10 +77,10 @@
     - Include the genres.
     - Insert language.
     - Insert film rating.
-    - Edit a movie or series.
+    - Update a movie or series.
     - Delete a movie or series.
-    - Add actors.
-    - Edit actors.
+    - Create actors.
+    - Update actors.
     - Delete actors.
 2. **Allow movies and series to be featured on the carousel of the home page of the full-stack application.**
 3. **Allow users to create an account and also give them the option to sign in using a One Time Password (OTP).**
