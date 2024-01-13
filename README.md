@@ -42,6 +42,8 @@
       <ul>
         <li><a href="#key-features">Key Features</a></li>
         <li><a href="#built-with">Built With</a></li>
+        <li><a href="#database-er-diagram">Database ER-Diagram</a></li>
+        <li><a href="#architecture">Architecture</a></li>
       </ul>
     </li>
     <li>
@@ -120,6 +122,23 @@
 [![Namecheap][Namecheap]][Namecheap-url]
 [![WatchModeAPI][WatchModeAPI]][WatchModeAPI-url]
 [![StreamingAvailabilityAPI][StreamingAvailabilityAPI]][StreamingAvailabilityAPI-url]
+
+<p align="right"><a href="#readme-top">Back to top</a></p>
+
+### Database ER-Diagram
+
+<div align="center">
+  <img src="er-diagram.png" alt="Architecture">
+</div>
+
+<p align="right"><a href="#readme-top">Back to top</a></p>
+
+
+### Architecture
+
+<div align="center">
+  <img src="architecture.png" alt="Architecture">
+</div>
 
 <p align="right"><a href="#readme-top">Back to top</a></p>
 
