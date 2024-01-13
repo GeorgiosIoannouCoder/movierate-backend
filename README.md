@@ -128,7 +128,7 @@
 ### Database ER-Diagram
 
 <div align="center">
-  <img src="er-diagram.png" alt="Architecture">
+  <img src="er-diagram.png" alt="ER-Diagram">
 </div>
 
 <p align="right"><a href="#readme-top">Back to top</a></p>
